@@ -144,6 +144,11 @@ Made By 박우용, 조승호, 이상훈, 최경락`
   useEffect(() => {
     window.scrollTo(10, 50)
   }, [pathname])
+// 페인트칠
+
+
+
+// 페인트 칠
 
   return (
     <Container>
@@ -153,7 +158,6 @@ Made By 박우용, 조승호, 이상훈, 최경락`
         <Routes>
           <Route path="main" element={<LandingPage />} />
           <Route path="/" element={<LandingPage />} />
-
  
           <Route path="new_pics" element={<NewPics />} />
           <Route path="favorites" element={<Favorites />} />
@@ -174,3 +178,10 @@ Made By 박우용, 조승호, 이상훈, 최경락`
     </Container>
   );
 };
+
+
+
+
+
+
+
