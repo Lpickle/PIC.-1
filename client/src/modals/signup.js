@@ -171,7 +171,7 @@ export const Signup = ({ closeFn, setOpenLoginModal, setOpenSignupModal }) => {
       }
     })()
   };
-  
+
   const sendEmailCode = async () => {
     const res = await axios.post(`${serverPath}/api/users/mail`, {
       email: email,
@@ -264,7 +264,7 @@ export const Signup = ({ closeFn, setOpenLoginModal, setOpenSignupModal }) => {
     if (!emailCode && codeInputValue) {
       return <Nofication>인증코드 전송이 필요합니다.</Nofication>;
     }
-    if(emailCode) {
+    if (emailCode) {
       return <Nofication>메일에 전송된 코드를 입력해주세요.</Nofication>;
     }
     return null;

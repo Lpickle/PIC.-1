@@ -15,6 +15,7 @@ import { PostDetails } from "./pages/postDetails";
 import { Navbar } from "./components/navbar";
 import { Footer } from "./components/footer";
 
+import { LocationSearch } from "./pages/locationSearch";
 import { TagSearch } from "./pages/tagSearch";
 import { CommentContainer } from "./components/commentContainer";
 import { NaverCallback } from "./pages/naverCallback";
@@ -27,14 +28,22 @@ import { NewPics } from "./pages/categories/newPics";
 import { Favorites } from "./pages/categories/favorites";
 import { LandingPage } from "./pages/landingPage";
 
+
 const GlobalStyles = createGlobalStyle`
 
-    /* font-family: 'Noto Sans KR', sans-serif; */
     
+    html {
+      body{
+        font-family: 'NanumSquareRound', sans-serif;
+        color : #000;
+      }
 
-    a {
-      color : black;
+      a {
+        color : black;
+      }
     }
+
+
     
     ${reset}
     .main{
@@ -61,6 +70,10 @@ const InnerContainer = styled.div`
   
   margin-top: 100px;
   margin-bottom: 200px;
+
+  @media screen and (max-width : 500px) {
+    margin-top: 150px;
+  }
 `
 
 
@@ -129,7 +142,7 @@ Made By 박우용, 조승호, 이상훈, 최경락`
 
   const { pathname } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(10, 50)
   }, [pathname])
 
   return (
@@ -141,20 +154,15 @@ Made By 박우용, 조승호, 이상훈, 최경락`
           <Route path="main" element={<LandingPage />} />
           <Route path="/" element={<LandingPage />} />
 
-          <Route path="my_pics" element={<MyPics />} />
-          <Route path="most_likes" element={<MostLikes />} />
+ 
           <Route path="new_pics" element={<NewPics />} />
           <Route path="favorites" element={<Favorites />} />
 
           <Route path="add_post" element={<AddPost />} />
 
-          <Route path="posts/:id" element={<PostDetails />} />
-          <Route path="posts/:id/modify/" element={<ModifyPost />} />
-          <Route path="posts/:id/comment" element={<CommentContainer />} />
-
           <Route path="tags" element={<TagSearch />} />
           <Route path="keywords" element={<KeywordsSearch />} />
-
+          <Route path="location" element={<LocationSearch />} />
           <Route path="mypage" element={<Mypage />} />
           <Route path="mypage/modify/" element={<ModifyMyinfo />} />
 

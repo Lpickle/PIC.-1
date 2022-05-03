@@ -44,7 +44,6 @@ export const KakaoCallback = () => {
         sessionStorage.setItem("userId", res.data._id)
         sessionStorage.setItem("loginToken", res.data.accessToken)
         sessionStorage.setItem("loginMethod", "social")
-        navigate("/my_pics")
         window.location.reload()
       }
     } else {
