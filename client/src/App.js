@@ -15,22 +15,20 @@ import { PostDetails } from "./pages/postDetails";
 import { Navbar } from "./components/navbar";
 import { Footer } from "./components/footer";
 
-import { LocationSearch } from "./pages/locationSearch";
 import { TagSearch } from "./pages/tagSearch";
 import { CommentContainer } from "./components/commentContainer";
 import { NaverCallback } from "./pages/naverCallback";
 import { KakaoCallback } from "./pages/kakaoCallback";
 import { KeywordsSearch } from './pages/keywordsSearch';
 
+import { LocationSearch } from "./pages/locationSearch";
 import { MyPics } from "./pages/categories/myPics";
 import { MostLikes } from "./pages/categories/mostLikes";
 import { NewPics } from "./pages/categories/newPics";
 import { Favorites } from "./pages/categories/favorites";
 import { LandingPage } from "./pages/landingPage";
 
-
 const GlobalStyles = createGlobalStyle`
-
     
     html {
       body{
@@ -142,13 +140,8 @@ Made By 박우용, 조승호, 이상훈, 최경락`
 
   const { pathname } = useLocation();
   useEffect(() => {
-    window.scrollTo(10, 50)
+    window.scrollTo(0, 0)
   }, [pathname])
-// 페인트칠
-
-
-
-// 페인트 칠
 
   return (
     <Container>
@@ -158,30 +151,31 @@ Made By 박우용, 조승호, 이상훈, 최경락`
         <Routes>
           <Route path="main" element={<LandingPage />} />
           <Route path="/" element={<LandingPage />} />
- 
-          <Route path="new_pics" element={<NewPics />} />
+
+          <Route path="most_likes" element={<MostLikes />} />
+          <Route path="my_pics" element={<MyPics />} />
           <Route path="favorites" element={<Favorites />} />
+          <Route path="new_pics" element={<NewPics />} />
 
           <Route path="add_post" element={<AddPost />} />
 
-          <Route path="tags" element={<TagSearch />} />
-          <Route path="keywords" element={<KeywordsSearch />} />
-          <Route path="location" element={<LocationSearch />} />
-          <Route path="mypage" element={<Mypage />} />
-          <Route path="mypage/modify/" element={<ModifyMyinfo />} />
+          <Route path="posts/:id" element={<PostDetails />} />
+          <Route path="posts/:id/modify/" element={<ModifyPost />} />
+          <Route path="posts/:id/comment" element={<CommentContainer />} />
 
-          <Route path="callback/naver" element={<NaverCallback />} />
+          <Route path="tags" element={<TagSearch />} />
+          <Route path="location" element={<LocationSearch />} />
+          <Route path="keywords" element={<KeywordsSearch />} />
+
+          <Route path="mypage/modify/" element={<ModifyMyinfo />} />
+          <Route path="mypage" element={<Mypage />} />
+
           <Route path="callback/kakao" element={<KakaoCallback />} />
+          <Route path="callback/naver" element={<NaverCallback />} />
         </Routes>
       </InnerContainer>
       <Footer />
     </Container>
   );
 };
-
-
-
-
-
-
-
+ß
