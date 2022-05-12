@@ -2,9 +2,6 @@ import react from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
-import { PlaceSearch } from "../modals/placeSearch";
-import markerImg from "../img/marker.png";
-import { IoLocateSharp as LocationPin, IoSearch } from "react-icons/io5";
 
 const Container = styled.section`
   position: relative;
@@ -26,9 +23,9 @@ const InnerContainer = styled.div`
   align-items: center;
 
   .BtnWrapper {
-    width: 100%;
-    display: flex;
-    column-gap: 10px;
+    width : 100%;
+    display : flex;
+    column-gap : 10px;
   }
 `;
 
@@ -47,80 +44,31 @@ const KakaoMapBox = styled.section`
 `;
 
 const SelectDistance = styled.div`
-  position: relative;
+  position : relative;
 
-  display: grid;
-  place-items: center;
+  display : grid;
+  place-items : center;
 
-  width: 50px;
-  height: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  width : 50px;
+  height : 20px;
+  border : 1px solid #ddd;
+  border-radius : 5px;
 
-  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
-
-  cursor: pointer;
-
-  span {
-    position: relative;
-    top: 2px;
-  }
-
-  transition: 0.1s;
-
-  &:hover {
-    background-color: #ffea7c;
-  }
-`;
-
-const BtnOnMap = styled.div`
-  position: absolute;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: max-content;
-  height: 1.5rem;
-  padding: 0 6px;
-
-  background-color: #ffd600;
-  border-radius: 1.5rem;
-  box-shadow: 0px 2px 3px rgba(0,0,0,0.5);
-
-  color: #000;
-
-  z-index: 2;
+  box-shadow : 0px 2px 3px rgba(0,0,0,0.2);
 
   cursor : pointer;
 
-  span {  
-    position: relative;
-    top: 1px;
-
-    font-size: 0.9rem;
+  span {
+    position : relative;
+    top : 2px;
   }
 
-  svg {
-    margin-left: 5px;
-  }
-
-  transition: 0.1s;
+  transition : 0.1s;
 
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 2px 6px rgba(0,0,0,0.5);
+    background-color : #FFEA7C;
   }
-`
-const MyLocationBtn = styled(BtnOnMap)`
-  top: 17px;
-  right: 17px;
-`
-
-const LocationSearchBtn = styled(BtnOnMap)`
-  bottom: 17px;
-  right: 17px;
-`
+`;
 
 export const LocationSearch = () => {
   // 일단 지도불러오기
@@ -131,13 +79,9 @@ export const LocationSearch = () => {
   // 썸네일 불러오기
   // -> 게시글 전체 한번에 불러와야함
   // -> 페이지네이션 없는 무한 스크롤 만들기.
-
   const serverPath = process.env.REACT_APP_SERVER_PATH
   const [centerPosition, setCenterPosition] = useState([]);
-  const [location, setLocation] = useState(null);
-  const [distance, setDistance] = useState("100");
-  const [searchModal, setSearchModal] = useState(false);
-  const [isLoadingMyLocation, setIsLoadingMyLocation] = useState(false)
+  const [distance, setDistance] = useState('100')
 
   const kakao = window.kakao;
   const kakaoMap = useRef();
@@ -145,136 +89,55 @@ export const LocationSearch = () => {
   useEffect(() => {
     const mapContainer = kakaoMap.current;
     let options = {
-      center: new kakao.maps.LatLng(37.5666805, 126.9784147),
-      // center: location ? new kakao.maps.LatLng(location.latitude, location.longitude) : new kakao.maps.LatLng(37.5666805, 126.9784147),
+      center: new kakao.maps.LatLng(33.450701, 126.570667),
       level: 3,
     };
-
     const map = new kakao.maps.Map(mapContainer, options);
 
-    const imageSrc = markerImg, // 마커이미지의 주소입니다
-      imageSize = new kakao.maps.Size(50, 45), // 마커이미지의 크기입니다
-      imageOption = { offset: new kakao.maps.Point(25, 38) };
-
-    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-
-    const markerPosition = new kakao.maps.LatLng(37.5666805, 126.9784147);
+    const markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
     // 마커 표시 될 위치
 
     const marker = new kakao.maps.Marker({
-      // map: map,
-      // position: positions[0].latlng,
       position: markerPosition,
-      image: markerImage,
     });
-    // 지도에 마커 표시
     marker.setMap(map);
 
-    const iwContent = '<div style="padding:5px;">띠용쓰<br><a href="https://map.kakao.com/link/map/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">여기에 게시글 제목 |</a> <a href="https://map.kakao.com/link/to/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">해당 게시글 길찾기</a></div>',
-      iwPosition = new kakao.maps.LatLng(37.5666805, 126.9784147)
-    console.log(location, "lo")
-
-    const infowindow = new kakao.maps.InfoWindow({
-      position: iwPosition,
-      content: iwContent
-    })
-    infowindow.open(map, marker)
-
-    if (location) {
-      marker.setPosition(new kakao.maps.LatLng(location.latitude, location.longitude));
-      const latlng = marker.getPosition();
-      map.setCenter(latlng);
-    }
-
-    kakao.maps.event.addListener(map, "dragend", (e) => {
-      let latlng = map.getCenter()
-      // map.getCenter(); // 현재 지도의 중심좌표를 가져옴.
-      // 인자로 e 를 넣고 e.latLng 를 하면 이벤트에 dragend에는 이벤트 객체가 없어서 (click과 달리) 저장할 것이 없다.
-      // 위치를 저장해야 하므로 지도의 중앙 좌표 getCenter()를 이용해서 지더의 중앙 위치를 저장해야한다. 
+    kakao.maps.event.addListener(map, "dragend", () => {
+      let latlng = map.getCenter(); // 현재 지도의 중심좌표를 가져옴.
       marker.setPosition(latlng);
       console.log(latlng, "HERE");
 
-      setLocation({
-        latitude: latlng.getLat(),
-        longitude: latlng.getLng(),
-      });
-
       setCenterPosition([latlng.Ma, latlng.La]);
     });
-  }, [location]);
-  // 거리 사용 -> 거리에 따라 확대비율 조정해야하니까.
+  }, []);
 
-  useEffect(async () => {
-    // const res = await axios.get(`${serverPath}/api/posts?center=${location.latitude, location.longitude}`)
-    // console.log(res, "location");
-  }, [centerPosition, distance]);
+  useEffect(() => {
+    // const res = axios.get(`${serverPath}/api/posts`)
+    console.log('국군지휘통신사령부 요청가즈아')
+  }, [centerPosition, distance])
 
-  const getMyLocation = () => {
-    setIsLoadingMyLocation(true)
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        if (position) {
-          setLocation(
-            {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            }
-          )
-          setIsLoadingMyLocation(false)
-        }
-      })
-    } else {
-      setIsLoadingMyLocation(false)
-      // 모달 상태
-    }
-  }
-
-  const modalHandler = (modal) => {
-    if (modal === "search") {
-      searchModal ? setSearchModal(false) : setSearchModal(true);
-    }
-  }
   return (
     <Container>
-      {searchModal ? <PlaceSearch setLocation={setLocation} closeFn={() => modalHandler('search')} /> : null}
       <InnerContainer>
-        <KakaoMapBox ref={kakaoMap}>
-          {/* {centerPosition && (
-            <div>
-              현재 중앙 좌표 : {centerPosition} // here ; {distance}
-            </div>
-          )} */}
-          <MyLocationBtn onClick={getMyLocation}>
-            <span>{isLoadingMyLocation ? '위치를 가져오는 중...' : '내 위치'}</span>
-            <LocationPin />
-          </MyLocationBtn>
-          <LocationSearchBtn onClick={() => modalHandler('search')}>
-            <span>주소로 검색하기</span>
-            <IoSearch />
-          </LocationSearchBtn>
-        </KakaoMapBox>
+        <KakaoMapBox ref={kakaoMap} />
+        {centerPosition && (
+          <div>
+            현재 중앙 좌표 : {centerPosition}
+          </div>
+        )}
         {/* Ma -> 위도, La -> 경도 */}
         <div className="BtnWrapper">
-          <SelectDistance onClick={() => setDistance("100")}>
-            <span>100m</span>
-          </SelectDistance>
-          <SelectDistance onClick={() => setDistance("300")}>
-            <span>300m</span>
-          </SelectDistance>
-          <SelectDistance onClick={() => setDistance("500")}>
-            <span>500m</span>
-          </SelectDistance>
-          <SelectDistance onClick={() => setDistance("1000")}>
-            <span>1 km</span>
-          </SelectDistance>
-          <SelectDistance onClick={() => setDistance("3000")}>
-            <span>3 km</span>
-          </SelectDistance>
+          <SelectDistance onClick={() => setDistance('100')}><span>100m</span></SelectDistance>
+          <SelectDistance onClick={() => setDistance('300')}><span>300m</span></SelectDistance>
+          <SelectDistance onClick={() => setDistance('500')}><span>500m</span></SelectDistance>
+          <SelectDistance onClick={() => setDistance('1000')}><span>1 km</span></SelectDistance>
+          <SelectDistance onClick={() => setDistance('3000')}><span>3 km</span></SelectDistance>
         </div>
       </InnerContainer>
     </Container>
   );
 };
+
 // 위치에 대한 옵션 제공 -> 필요하지 않음
 // -> 내 위치 혹은, 지도에서 주소검색 이용해서 위치를 정할 수 있음
 // 그리고 그 위치를 중심좌표로 이용해서 주변 반경 nkm 의 사진을 불러 오는 것

@@ -135,7 +135,7 @@ const LeftLinks = styled.div`
 
 const RightLinks = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
   place-items: center;
 `;
@@ -210,6 +210,7 @@ export const Navbar = ({ isLogin }) => {
       openTwoBtnModal ? setOpenTwoBtnModal(false) : setOpenTwoBtnModal(true);
     }
   };
+
 
   const handleLogout = () => {
     sessionStorage.clear()

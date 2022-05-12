@@ -204,7 +204,6 @@ const NoSearch = styled.div`
 `
 
 export const PlaceSearch = ({ setLocation, closeFn }) => {
-  console.log(closeFn, "CLOSE", setLocation, "LO")
   const kakao = window.kakao
 
   const [searchValue, setSearchValue] = useState('')
@@ -213,7 +212,7 @@ export const PlaceSearch = ({ setLocation, closeFn }) => {
   const inputHandler = (e) => {
     setSearchValue(e.target.value)
 
-    if (e.keyCode === 13) {
+    if(e.keyCode === 13){
       e.preventDefault()
       getPlaces()
     }
@@ -247,7 +246,7 @@ export const PlaceSearch = ({ setLocation, closeFn }) => {
 
   return (
     <Container>
-      <Backdrop onClick={closeFn} />
+    <Backdrop onClick={closeFn} />
       <Modal>
         <InnerContainer>
           <SearchContainer>
@@ -267,7 +266,6 @@ export const PlaceSearch = ({ setLocation, closeFn }) => {
                     <PlaceResult key={idx} idx={idx} onClick={() => getPlaceCoords(place.y, place.x)}>
                       <div className='place_name'> {place.place_name}</div>
                       <div className='address_name'>{place.address_name}</div>
-                      {/* {console.log(place, "장소")} */}
                     </PlaceResult>
                   )
                 })

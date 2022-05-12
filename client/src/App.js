@@ -21,14 +21,15 @@ import { NaverCallback } from "./pages/naverCallback";
 import { KakaoCallback } from "./pages/kakaoCallback";
 import { KeywordsSearch } from './pages/keywordsSearch';
 
-import { LocationSearch } from "./pages/locationSearch";
 import { MyPics } from "./pages/categories/myPics";
 import { MostLikes } from "./pages/categories/mostLikes";
 import { NewPics } from "./pages/categories/newPics";
 import { Favorites } from "./pages/categories/favorites";
 import { LandingPage } from "./pages/landingPage";
+import { LocationSearch } from "./pages/locationSearch";
 
 const GlobalStyles = createGlobalStyle`
+
     
     html {
       body{
@@ -152,10 +153,10 @@ Made By 박우용, 조승호, 이상훈, 최경락`
           <Route path="main" element={<LandingPage />} />
           <Route path="/" element={<LandingPage />} />
 
-          <Route path="most_likes" element={<MostLikes />} />
           <Route path="my_pics" element={<MyPics />} />
-          <Route path="favorites" element={<Favorites />} />
+          <Route path="most_likes" element={<MostLikes />} />
           <Route path="new_pics" element={<NewPics />} />
+          <Route path="favorites" element={<Favorites />} />
 
           <Route path="add_post" element={<AddPost />} />
 
@@ -164,14 +165,14 @@ Made By 박우용, 조승호, 이상훈, 최경락`
           <Route path="posts/:id/comment" element={<CommentContainer />} />
 
           <Route path="tags" element={<TagSearch />} />
-          <Route path="location" element={<LocationSearch />} />
           <Route path="keywords" element={<KeywordsSearch />} />
+          <Route path="location" element={<LocationSearch />} />
 
-          <Route path="mypage/modify/" element={<ModifyMyinfo />} />
           <Route path="mypage" element={<Mypage />} />
+          <Route path="mypage/modify/" element={<ModifyMyinfo />} />
 
-          <Route path="callback/kakao" element={<KakaoCallback />} />
           <Route path="callback/naver" element={<NaverCallback />} />
+          <Route path="callback/kakao" element={<KakaoCallback />} />
         </Routes>
       </InnerContainer>
       <Footer />

@@ -103,45 +103,23 @@ const ModifyBtn = styled.div`
 `
 
 const ImgContainer = styled.section`
-  position: relative;
-
   display: grid;
   place-items: center;
 
   width: 100%;
   aspect-ratio: 4 / 3;
 
+  background: ${props => `url(${props.img})`};
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+
   box-shadow: 0px 3px 5px rgba(0,0,0,0.3);
 
   border-radius: 10px;
 
-  overflow: hidden;
-
-  .loading {
-    position: absolute;
-
-    display: grid;
-    place-items: center;
-
-    width: 100%;
-    height: 100%;
-
-    background-color: #fff;
-  }
-
-  img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit : contain;
-  }
-
   @media screen and (max-width : 500px) {
     aspect-ratio: 1 / 1;
-    img {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit : contain;
-    }
   }
 `
 
@@ -331,6 +309,7 @@ export const PostDetails = () => {
       } catch (err) {
         //err
       }
+      setIsLoading(false)
     })()
   }, [])
 
@@ -426,13 +405,8 @@ export const PostDetails = () => {
           <ToggleLikeBtn likeStat={likeStat} />
 
         </div>
-        <ImgContainer>
-          {isLoading && (
-            <div className='loading'>
-              <LoadingIndicator size={'7rem'} />
-            </div>
-          )}
-          <img src={photo} alt="img" onLoad={() => setIsLoading(false)} />
+        <ImgContainer img={photo}>
+          {isLoading ? <LoadingIndicator size={'7rem'} /> : null}
         </ImgContainer>
 
         <MapContainer>

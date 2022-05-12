@@ -124,7 +124,6 @@ export const PostContainer = ({ reqEndpoint, category, setResult }) => {
 
   useEffect(() => {
     setPostEnd(false)
-    console.log(reqEndpoint, "END")
   }, [reqEndpoint])
 
   useEffect(() => {
